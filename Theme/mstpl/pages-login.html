@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{$Think.const.SET_URL}Theme/mstpl/img/favicon.png">
+    <title>{$result.title}</title>
+    <!-- page css -->
+    <link href="{$Think.const.SET_URL}Theme/mstpl/css/login-register-lock.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{$Think.const.SET_URL}Theme/mstpl/css/style.min.css" rel="stylesheet">
+    <link href="{$Think.const.SET_URL}Theme/mstpl/css/layer.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="skin-default card-no-border">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label"> {$result.title}</p>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <section id="wrapper">
+        <div class="login-register" style="background-image:url(" {$Think.const.SET_URL}Theme/mstpl/img/background/login-register.jpg
+            ");">
+            <div class="login-box card">
+                <div class="card-body">
+                    <div class="form-horizontal form-material">
+                        <h3 class="box-title m-b-20">快速添加密码</h3>
+                        <div class="form-group ">
+                            <div class="col-xs-12">
+                                <input class="form-control" type="text" id="token" required="" placeholder="输入您后台设置的token"> </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="col-xs-12">
+                                <input class="form-control" type="text" id="username" required="" placeholder="请输入账号"> </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input class="form-control" type="password" id="password" required="" placeholder="请输入密码"> </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">Remember me</label>
+                                    <!-- <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Forgot pwd?</a> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <div class="col-xs-12 p-b-20">
+                                <button class="btn btn-block btn-lg btn-info btn-rounded" id="insert">Insert GO！</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 m-t-10 text-center">
+
+                            </div>
+                        </div>
+                        <div class="form-group m-b-0">
+                            <div class="col-sm-12 text-center">
+                                你没有Token?
+                                <a href="#" class="text-info m-l-5">
+                                    <b>只有管理员知道！</b>
+                                </a>
+                            </div>
+                            <div class="col-sm-12 text-center">
+                                <a href="http://www.miitbeian.gov.cn/" target="_blank">
+                                {$result.beian}</a>
+                                <!-- <a href="#" class="text-info m-l-5">
+                                    <b>只有管理员知道！</b>
+                                </a> -->
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="{$Think.const.SET_URL}Theme/mstpl/js/jquery-3.2.1.min.js"></script>
+    <script src="{$Think.const.SET_URL}Theme/mstpl/js/layer.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{$Think.const.SET_URL}Theme/mstpl/js/popper.min.js"></script>
+    <script src="{$Think.const.SET_URL}Theme/mstpl/js/bootstrap.min.js"></script>
+    <!--Custom JavaScript -->
+    <script type="text/javascript">
+        $(function () {
+            $(".preloader").fadeOut();
+        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        // ============================================================== 
+        // Login and Recover Password 
+        // ============================================================== 
+        $('#to-recover').on("click", function () {
+            $("#loginform").slideUp();
+            $("#recoverform").fadeIn();
+        });
+    </script>
+    <script type="text/javascript">
+        $("#insert").click(function () {
+            var e = 0;
+            var token = $("#token").val();
+            var name = $("#username").val();
+            var pwd = $("#password").val();
+            if (token == "") {
+
+                layer.msg("TOKEN不能为空");
+                return false;
+
+            }
+            var reg = /^[0-9a-zA-Z]+$/
+            var str = name;
+            if (!reg.test(str)) {
+                layer.msg("键入的账户不允许为中文");
+                return false;
+            }
+            if (name.length < 6) {
+                layer.msg("账户最小长度为6");
+                return false;
+            }
+            if (pwd == "") {
+
+                layer.msg("请输入密码");
+
+                return false;
+
+            }
+            if (pwd.length < 6) {
+                layer.msg("账户最小长度为6");
+                return false;
+            }
+            if (e == 0) {
+                $.post("{:U('index/add')}", { token:token,name: name, pwd: pwd }, function (data) {
+                    if (data.status == '1') {
+                        layer.msg(data.info);
+                        window.location.href = data.url;
+                    } else {
+                        layer.msg(data.info);
+                    }
+                })
+            }
+
+        })
+    </script>
+</body>
+
+</html>

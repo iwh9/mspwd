@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title> TOKEN设置-默笙后台管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="这不仅仅是一个后台管理系统，它基于BT4，超强的自适应，简洁，高效，大方" />
+    <meta content="Mosheng" name="author" />
+
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{$Think.const.ADMIN_URL}/assets/images/favicon.ico">
+
+    <!-- App css -->
+    <link href="{$Think.const.ADMIN_URL}/css/vendor/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{$Think.const.ADMIN_URL}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{$Think.const.ADMIN_URL}/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{$Think.const.ADMIN_URL}/css/app.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    <!-- 公共头部开始-->
+    <include file="Common:header" />
+    <!-- 公共头部结束-->
+
+    <div class="wrapper">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item">
+                                    <a href="#">默笙</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">系统</a>
+                                </li>
+                                <li class="breadcrumb-item active">TOKEN设置</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">TOKEN设置</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">TOKEN设置</h4>
+                            <p class="text-muted font-14">
+                                将在进行部分敏感操作时，将要进行<code>TOKEN</code>验证
+                                请注意保护您的<code>TOKEN</code>不要将它告诉任何人，
+                                我们对您的<code>TOKEN</code>已进行双重加密，请放心使用，定期修改<code>TOKEN</code>
+                                会使您的站点更加安全
+                            </p>
+
+                            <form class="form-horizontal">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Token</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="token" class="form-control" value="">
+                                        <p class="text-danger">
+                                            PS:避免系统异常请避免使用特殊符号，请使用字母+数字组合
+                                        </p> 
+                                    </div>
+                                </div>
+                               
+                               <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <button type="button" id="uptoken" class="btn btn-primary">修改TOKEN</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+
+
+                            </form>
+
+                        </div>
+                        <!-- end card-box -->
+                    </div>
+                    <!-- end card-->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+
+
+
+
+
+
+
+
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end wrapper -->
+
+
+    <!-- 公共底部开始-->
+    <include file="Common:footer" />
+    <!-- 公共底部结束-->
+
+
+    <!-- App js -->
+    <script src="{$Think.const.ADMIN_URL}/js/vendor.min.js"></script>
+    <script src="{$Think.const.ADMIN_URL}/js/app.min.js"></script>
+    <!-- Plugins js -->
+    <script src="{$Think.const.ADMIN_URL}/js/vendor/sweetalert2.min.js"></script>
+    <script src="{$Think.const.ADMIN_URL}/js/pages/sweet-alerts.init.js"></script>
+</body>
+<script type="text/javascript">
+    $("#uptoken").click(function () {
+        var e = 0;
+        var token = $("#token").val();
+       
+        if (token == "") {
+            swal({
+                title: "请输入Token",
+                confirmButtonClass: "btn btn-confirm mt-2"
+            }).
+                catch(swal.noop)
+            return false;
+
+        }
+        if (token.length < 6) {
+            swal({
+                title: "TOKEN长度最小为6",
+                confirmButtonClass: "btn btn-confirm mt-2"
+            }).
+                catch(swal.noop)
+            return false;
+        }
+        if (e == 0) {
+            $.post("{:U('admin.php/system/token')}", {t:token}, function (data) {
+                if (data.status == '1') {
+                    swal({
+                        title: "成功",
+                        text: data.info,
+                        type: "success",
+                        confirmButtonClass: "btn btn-confirm mt-2"
+                    }).then(function() {
+                       window.location.href = data.url;
+                    })
+                    
+                } else {
+                    swal({
+                        title: "失败",
+                        text: data.info,
+                        type: "error",
+                        confirmButtonClass: "btn btn-confirm mt-2"
+                    })
+                }
+            })
+        }
+
+    })
+    
+</script>
+</html>

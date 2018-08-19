@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>主题管理 - 默笙后台管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="这不仅仅是一个后台管理系统，它基于BT4，超强的自适应，简洁，高效，大方" />
+    <meta content="Mosheng" name="author" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{$Think.const.ADMIN_URL}/assets/images/favicon.ico">
+
+    <!-- App css -->
+    <link href="{$Think.const.ADMIN_URL}/css/vendor/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="{$Think.const.ADMIN_URL}/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{$Think.const.ADMIN_URL}/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="{$Think.const.ADMIN_URL}/css/app.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    <!-- 公共头部开始-->
+    <include file="Common:header" />
+    <!-- 公共头部结束-->
+
+    <div class="wrapper">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item">
+                                    <a href="#">默笙</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">系统</a>
+                                </li>
+                                <li class="breadcrumb-item active">主题管理</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">主题管理</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+           
+                <div class="row">
+                    <volist name="list" id="vo">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body ribbon-box">
+                                <div class="{$vo.templeclass}">{$vo.templename}</div>
+                                <p class="mb-0">
+                                    <img src="{$vo.templeimg}">&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button" onclick="uptemp('{$vo.templeurl}')" class="btn btn-success">应用主题</button>
+                                    
+                                </p>
+                            </div>
+                            <!-- end card-body-->
+                        </div>
+                    </div>
+                    </volist>
+                    <!-- end col-->
+            
+            
+                <!-- end col-->
+
+            </div>
+            <!-- end row -->
+
+
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end wrapper -->
+
+
+    <!-- 公共底部开始-->
+    <include file="Common:footer" />
+    <!-- 公共底部结束-->
+
+
+    <!-- App js -->
+    <script src="{$Think.const.ADMIN_URL}/js/vendor/sweetalert2.min.js"></script>
+    <script src="{$Think.const.ADMIN_URL}/js/pages/sweet-alerts.init.js"></script>
+    <script src="{$Think.const.ADMIN_URL}/js/vendor.min.js"></script>
+    <script src="{$Think.const.ADMIN_URL}/js/app.min.js"></script>
+    <script>
+        function uptemp(url){
+            var e = 0;
+            var url= url;
+            if (e == 0) {
+                $.post("{:U('admin.php/Temple/uptemple')}", { u:url}, function (data) {
+                    if (data.status == '1') {
+                        swal({
+                            title: "设置成功",
+                            text: "Good Job ！",
+                            type: "success",
+                            confirmButtonClass: "btn btn-confirm mt-2"
+                        }).then(function() {
+                           window.location.href = data.url;
+                        })
+                        
+                    } else {
+                        swal({
+                            title: "设置失败",
+                            text: "It's awful",
+                            type: "error",
+                            confirmButtonClass: "btn btn-confirm mt-2"
+                        })
+                    }
+                })
+            }
+
+        }
+    </script>
+</body>
+
+</html>

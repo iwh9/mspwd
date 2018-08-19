@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>密码管理 - 默笙后台管理系统</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta content="这不仅仅是一个后台管理系统，它基于BT4，超强的自适应，简洁，高效，大方" />
+        <meta content="Mosheng" name="author" />
+
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="{$Think.const.ADMIN_URL}assets/images/favicon.ico">
+
+        <!-- third party css -->
+        <link href="{$Think.const.ADMIN_URL}css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
+        <link href="{$Think.const.ADMIN_URL}css/vendor/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
+        <link href="{$Think.const.ADMIN_URL}css/vendor/buttons.bootstrap4.css" rel="stylesheet" type="text/css" />
+        <link href="{$Think.const.ADMIN_URL}css/vendor/select.bootstrap4.css" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
+
+        <!-- App css -->
+        <link href="{$Think.const.ADMIN_URL}/css/vendor/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+        <link href="{$Think.const.ADMIN_URL}css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="{$Think.const.ADMIN_URL}css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="{$Think.const.ADMIN_URL}css/app.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body>
+
+        <!-- 公共头部开始-->
+        <include file="Common:header" />
+        <!-- 公共头部结束-->
+
+        <div class="wrapper">
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="#">默笙</a></li>
+                                    <li class="breadcrumb-item"><a href="#">密码</a></li>
+                                    <li class="breadcrumb-item active">密码管理</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">密码管理</h4>
+                        </div>
+                    </div>
+                </div>     
+                <!-- end page title --> 
+
+
+                
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="header-title">密码列表</h4>
+                                <p class="text-muted font-13 mb-4">
+                                    点击<code>复制</code>即可复制表格所有数据, 点击<code>打印</code>即可打印表格所有数据。<br>
+                                    点击<code>账号</code>或者<code>密码</code>即可快速复制账号密码。你还可以：<br>
+                                    <a href="{:U('admin.php/pass/export')}" class="btn btn-secondary">导出全部数据</a>
+                                </p>
+
+                                
+                                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>详细</th>
+                                            <th>分类</th>
+                                            <th>账号</th>
+                                            <th>密码</th>
+                                            <th>网站地址</th>
+                                            <th>添加时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                
+                                
+                                    <tbody>
+                                        <volist name="list" id="vo">
+                                        <tr>
+                                            <td>#{$vo.id}</td>
+                                            <th>
+                                                <eq name="at.is_all" value="0">
+                                                <a href="javascript:" onclick="detail(this,'{$vo.id}','{$vo.cid.cname}','{$vo.adress}','{$vo.username}','{$vo.password}','{$vo.email}','{$vo.phone}','{$vo.remark}')">onClick</a>
+                                                </eq>
+                                                <eq name="at.is_all" value="1">
+                                                    <span class="badge badge-danger badge-pill">没有权限</span>
+                                                </eq>
+                                                </th>
+                                            <td>{$vo.cid.cname}</td>
+                                            <td> <span value="{$vo.username}" class="copyVideo"  onclick="copyVideoUrl(event)">{$vo.username}</span></td>
+                                            <td>
+                                                    <eq name="at.is_all" value="1">
+                                                    <span class="badge badge-danger badge-pill">**********</span>
+                                                    </eq>
+                                                    <eq name="at.is_all" value="0">
+                                                    
+                                                    <span value="{$vo.password}" class="copyVideo"  onclick="copyVideoUrl(event)">{$vo.password}</span>
+                                                    
+                                                    </eq>
+
+                                            </td>
+                                            <td><a href="http://{$vo.adress}" target="_blank">{$vo.adress}</a></td>
+                                            <td> {$vo.date|date='Y/m/d H:i',###}</td>
+                                            <td>
+                                            <eq name="at.is_all" value="0">
+                                            <a  href="{:U('admin.php/pass/uppass',array('id'=>$vo[id]))}" title="编辑"><i class="mdi mdi-pencil mr-1 text-muted"></i></a>
+                                            <a  onClick="ty_del(this,'{$vo.id}')" title="删除"><i class="mdi mdi-delete mr-1 text-muted"></i></a>
+                                            </eq>
+                                            <eq name="at.is_all" value="1">
+                                                    <span class="badge-pill">没有权限</span>
+                                            </eq>
+                                            </td>
+                                        </tr>
+                                        </volist>
+                                    </tbody>
+                                </table>
+                                
+                            </div> <!-- end card body-->
+                        </div> <!-- end card -->
+                    </div><!-- end col-->
+                </div>
+                <!-- end row-->
+
+
+                
+
+                
+            </div> <!-- end container -->
+        </div>
+        <!-- end wrapper -->
+
+
+        <!-- 公共底部开始-->
+        <include file="Common:footer" />
+        <!-- 公共底部结束-->
+
+
+        <!-- App js -->
+        <script src="{$Think.const.ADMIN_URL}/js/vendor.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/app.min.js"></script>
+
+        <!-- third party js -->
+        <script src="{$Think.const.ADMIN_URL}js/vendor/jquery.dataTables.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/dataTables.bootstrap4.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/dataTables.responsive.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/responsive.bootstrap4.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/dataTables.buttons.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/buttons.bootstrap4.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/buttons.html5.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/buttons.flash.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/buttons.print.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/dataTables.keyTable.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/dataTables.select.min.js"></script>
+        <!-- third party js ends -->
+        <script src="{$Think.const.ADMIN_URL}/layer/layer.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/vendor/sweetalert2.min.js"></script>
+        <script src="{$Think.const.ADMIN_URL}/js/pages/sweet-alerts.init.js"></script>
+        <!-- demo app -->
+        <script src="{$Think.const.ADMIN_URL}/js/pages/datatables.init.js"></script>
+        <!-- end demo js-->
+        <script type="text/javascript">
+            function copyVideoUrl(event){
+ 
+             var value = $(event.target).closest("span").attr('value');
+             var success;
+             var $temp = $("<input>");
+             $("body").append($temp);
+             $temp.val(value).select();
+             try{
+                success = document.execCommand("copy");
+             }catch (e){
+                 succeed = false;
+             }
+             if(success){
+                 swal({
+                         title: "复制成功！",
+                             text: "<?php echo($message); ?>",
+                             type: "success",
+                             confirmButtonClass: "btn btn-confirm mt-2"
+                     })
+             }
+ 
+             $temp.remove();
+         }
+         function detail(obj,id,cname,adress,username,password,email,phone,remark){
+            var id = id;
+            var cname = cname;
+            var adress = adress;
+            var username = username;
+            var password = password;
+            var email = email;
+            var phone = phone;
+            var remark = remark;
+            swal({
+                title: "<u>详细信息</u>",
+                type: "info",
+                html: '密码ID： <b>'+id+'</b><br>所在分类：'+cname+'<b></b><br>登录地址：<a href="//'+adress+'/" target="_blank">'+adress+'</a><br> 用户名：<b>'+username+'</b><br>密码：<b>'+password+'</b><br>邮箱：<b>'+email+'</b></br>手机号：<b>'+phone+'</b><br>备注：<b>'+remark+'</b><br>',
+                imageHeight: 50,
+                animation: !1,
+                confirmButtonClass: "btn btn-confirm mt-2"
+            })
+         }
+         function ty_del(obj, id) {
+            var id = id;
+            layer.confirm('确认要删除吗？', function (index) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{:U('admin.php/pass/classdel')}',
+                    dataType: 'json',
+                    data: { id: id },
+                    success: function (data) {
+                        console.log(data);
+                        if (data.status == '1') {
+                            layer.msg(data.info);//layer.msg('不开心。。', {icon: 5});
+                            window.location.reload();
+                        } else {
+                            layer.msg(data.info);
+                        }
+                    },
+                    error: function (data) {
+                        layer.msg('删除失败!');
+                    },
+                });
+            });
+        }
+         </script>
+    </body>
+</html>

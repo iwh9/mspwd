@@ -1,0 +1,48 @@
+<footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        Mosheng Admin &copy; 2018 - tecms.net
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-md-right footer-links d-none d-sm-block">
+                            <a href="javascript:" onclick="aboutus()">关于我们</a>
+                            <a href="javascript:" onclick="help()">帮助</a>
+                            <a href="javascript:" onclick="tel()">联系我们</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</footer>
+<script type="text/javascript">
+    function aboutus(){
+        swal({
+            title: "<u>关于我们</u>",
+            type: "info",
+            html: '河南默笙网络科技有限公司版权所有 <br>非商用使用请保留版权地址<b></b><br><a href="//www.tecms.net/" target="_blank">默笙官网</a><br>',
+            imageHeight: 50,
+            animation: !1,
+            confirmButtonClass: "btn btn-confirm mt-2"
+            })
+    }
+    function help(){
+        swal({
+            title: "<u>帮助</u>",
+            type: "info",
+            html: '使用过程中有任何建议或者疑问点击下方加群<b></b><br><a href="//jq.qq.com/?_wv=1027&k=5O03T85" target="_blank">QQ群：484395502</a><br>',
+            imageHeight: 50,
+            animation: !1,
+            confirmButtonClass: "btn btn-confirm mt-2"
+            })
+    }
+    function tel(){
+        swal({
+            title: "<u>帮助</u>",
+            type: "info",
+            html: '点击下方加群<b></b><br><a href="//jq.qq.com/?_wv=1027&k=5O03T85" target="_blank">QQ群：484395502</a><br><a href="http://wpa.qq.com/msgrd?v=3&uin=3494490&site=qq&menu=yes" target="_blank">默笙QQ：3494490</a>',
+            imageHeight: 50,
+            animation: !1,
+            confirmButtonClass: "btn btn-confirm mt-2"
+            })
+    }
+</script>
